@@ -632,7 +632,7 @@ document.getElementById('groundVolume').addEventListener('change', updateTotalVo
         }
         let segHeight = ratio * containerHeight;
         let percent = (ratio * 100).toFixed(1) + '%';
-        let annotation = row.cells[0].textContent.trim() + "/" + row.cells[2].textContent.trim() + "_" + percent;
+        let annotation = row.cells[0].textContent.trim() + "_" + row.cells[2].textContent.trim() + "_" + percent;
         segments.push({
           height: segHeight,
           color: bg,
