@@ -699,6 +699,8 @@ document.getElementById('groundVolume').addEventListener('change', updateTotalVo
       document.getElementById('groundVolume').value = "";
       document.getElementById('wellboreVolume').value = "";
       document.getElementById('totalVolume').value = "";
+      document.getElementById('displacement').value = "";
+      document.getElementById('totalLiquid').value = "";
       document.getElementById('dataTable').querySelector('tbody').innerHTML =
         '<tr><td contenteditable="true"></td>' +
         '<td contenteditable="true"></td>' +
