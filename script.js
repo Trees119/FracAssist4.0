@@ -632,7 +632,7 @@ document.getElementById('groundVolume').addEventListener('change', updateTotalVo
         }
         let segHeight = ratio * containerHeight;
         let percent = (ratio * 100).toFixed(1) + '%';
-        let annotation = row.cells[0].textContent.trim() + "_" + row.cells[2].textContent.trim() + "_" + percent;
+        let annotation = row.cells[0].textContent.trim() + "/" + row.cells[2].textContent.trim() + "_" + percent;
         segments.push({
           height: segHeight,
           color: bg,
@@ -822,6 +822,78 @@ document.getElementById('startBtn').addEventListener('click', function() {
   totalLiquidTimer = setInterval(updateDynamicTotalLiquid, 1000);
 });
 
+// ======= 新增：水平井功能 =======
+ window.closeHorizontalDialog = function() {
+    document.getElementById('horizontalWellDialog').style.display = 'none';
+  };
+
+  // 新增：绑定“关闭”按钮
+  document.getElementById('closeHorizontalBtn').addEventListener('click', closeHorizontalDialog);
+
+// 打开水平井对话框
+document.getElementById('horizontalWellBtn').addEventListener('click', () => {
+  document.getElementById('horizontalWellDialog').style.display = 'block';
+});
+
+// 关闭对话框函数
+function closeHorizontalDialog() {
+  document.getElementById('horizontalWellDialog').style.display = 'none';
+}
+window.closeHorizontalDialog = function() {
+  document.getElementById('horizontalWellDialog').style.display = 'none';
+};
+// 点击“完成”后，计算比例并定位“A靶”
+document.getElementById('completeHorizontalBtn').addEventListener('click', () => {
+  const segDepth = parseFloat(document.getElementById('segmentDepthHW').value) || 0;
+  const tgtDepth = parseFloat(document.getElementById('targetDepthHW').value) || 0;
+  if (segDepth <= 0 || tgtDepth < 0) {
+    alert('请填写有效的段深（>0）和 A 靶深（≥0）');
+    return;
+  }
+
+// ====== “完成”按钮逻辑（替换原有插入段落） ======
+document.getElementById('completeHorizontalBtn').addEventListener('click', () => {
+  const segDepth = parseFloat(document.getElementById('segmentDepthHW').value) || 0;
+  const tgtDepth = parseFloat(document.getElementById('targetDepthHW').value) || 0;
+  if (segDepth <= 0 || tgtDepth < 0) {
+    alert('请填写有效的段深（>0）和 A 靶深（≥0）');
+    return;
+  }
+  const ratio = tgtDepth / segDepth;
+
+  // 获取动画容器 & 左侧面板
+  const container = document.getElementById('wellboreAnimation');
+  const panel = container.closest('.left-panel');
+
+  // 动画容器在面板中的相对位置
+  const contRect = container.getBoundingClientRect();
+  const panelRect = panel.getBoundingClientRect();
+  const offsetTop = contRect.top - panelRect.top;    // 容器顶端到面板顶端的距离
+
+  // 计算标记位置：从动画顶端开始，向下 ratio * 高度
+  const y = offsetTop + ratio * container.clientHeight;
+
+  // 移除旧标记
+  panel.querySelectorAll('.horizontal-marker').forEach(el => el.remove());
+
+  // 创建新标记并插入到 panel
+  const marker = document.createElement('div');
+  marker.className = 'horizontal-marker';
+  marker.style.top = `${y}px`;                       // 相对于 panel
+  marker.style.left = `${contRect.left - panelRect.left - 30}px`; // 紧贴容器左侧，留 20px 间距
+  marker.innerText = 'A靶';
+  panel.appendChild(marker);
+
+  closeHorizontalDialog();
+});
+});
+
+// ====== “重置”按钮逻辑中，也要清除标记 ======
+document.getElementById('resetBtn').addEventListener('click', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.horizontal-marker').forEach(el => el.remove());
+  }, 0);
+});
   
 
   // 初始化数据、事件绑定及计算更新
