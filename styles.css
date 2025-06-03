@@ -1,4 +1,4 @@
-/* ---------------- 基本页面样式 ---------------- */
+、/* ---------------- 基本页面样式 ---------------- */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -174,7 +174,7 @@ body {
 }
 /* 新增：冻结表头功能 */
 .table-container {
-  max-height: calc(100vh - 200px); /* 动态计算容器高度 */
+  max-height: calc(100vh - 280px); /* 动态计算容器高度 */
   overflow-y: auto;               /* 启用垂直滚动 */
   position: relative;             /* 创建定位上下文 */
   margin-top: 10px;               /* 与上方元素保持间距 */
@@ -460,4 +460,17 @@ tr.selected {
 }
 tr:active {
   background-color: #bbdefb !important;
+}
+/* ---------------- 新增：水平井按钮样式 ---------------- */
+
+
+
+/* ---------------- 新增：A靶标记样式 ---------------- */
+
+.horizontal-marker {
+  position: absolute;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #0000FF;
+  white-space: nowrap;
 }
